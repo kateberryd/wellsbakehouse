@@ -93,6 +93,7 @@ static public function generate_timezone_list(){
     public function pay(Request $request)
     {
      
+     
       $data=array();
       $finalresult=array();
       $result=array();
@@ -194,7 +195,6 @@ static public function generate_timezone_list(){
     
     public function basketPayment(Request $request)
     {
-      dd(1222);
       $data=array();
       $finalresult=array();
       $result=array();

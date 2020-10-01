@@ -66,6 +66,7 @@ Route::get("resetpassword/{code}","AppuserController@resetpwd");
 Route::any("checkout","frontController@checkout");
 Route::any("resetnewpwd","AppuserController@resetpassword");
 Route::any("placeorder","AppuserController@placeorder");
+Route::any("basketplaceorder","AppuserController@placeorderbasket");
 Route::get("myaccount","frontController@myaccount");
 Route::get("checkuserpassword/{cpwd}","AppuserController@checkuserpassword");
 Route::get("changeuserpwd","AppuserController@changeuserpwd");

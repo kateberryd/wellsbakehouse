@@ -14,5 +14,7 @@ class OrderResponse extends Model
     {      
         return $this->hasOne('App\Item', 'id', 'item_id');
     }
+    
+    
 }
 ?>

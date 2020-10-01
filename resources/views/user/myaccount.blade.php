@@ -13,11 +13,11 @@
             <div class="acc-pro1-box">
                <div class="acc-pro-box">
                   <div class="acc-proimg">
-                     <?php $external_link = asset('public/upload/profile'.'/'.Session::get('user_photo'));
+                     <?php $external_link = asset('upload/profile'.'/'.Session::get('user_photo'));
                         if (@GetImageSize($external_link)) {
                         	$image = $external_link;
                         } else {
-                        	$image = asset('public/upload/profile'.'/'.'my-account-pro.png');
+                        	$image = asset('upload/profile'.'/'.'my-account-pro.png');
                         }?>
                      <img src="{{$image}}">
                   </div>
@@ -30,7 +30,7 @@
                   <li class="nav-item">
                      <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
                         <span class="account-tabimg">
-                        <img src="{{asset('burger/images/tab-1.png')}}" class="acc-tab-icon">
+                        <img src="{{asset('images/tab-1.png')}}" class="acc-tab-icon">
                         </span>
                         <p>{{__('messages.myorder')}}</p>
                      </a>
@@ -38,7 +38,7 @@
                   <li class="nav-item">
                      <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">
                         <span class="account-tabimg">
-                        <img src="{{asset('burger/images/tab-2.png')}}" class="acc-tab-icon">
+                        <img src="{{asset('images/tab-2.png')}}" class="acc-tab-icon">
                         </span>
                         <p>{{__('messages.per_detail')}}</p>
                      </a>
@@ -46,7 +46,7 @@
                   <li class="nav-item">
                      <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">
                         <span class="account-tabimg">
-                        <img src="{{asset('burger/images/tab-3.png')}}" class="acc-tab-icon">
+                        <img src="{{asset('images/tab-3.png')}}" class="acc-tab-icon">
                         </span>
                         <p>{{__('messages.change_password')}}</p>
                      </a>
@@ -54,7 +54,7 @@
                   <li class="nav-item log">
                      <a class="nav-link" data-toggle="modal" data-target="#myModal2" href="#logout" role="tab">
                         <span class="account-tabimg">
-                        <img src="{{asset('burger/images/tab-4.png')}}" class="acc-tab-icon">
+                        <img src="{{asset('images/tab-4.png')}}" class="acc-tab-icon">
                         </span>
                         <p>{{__('messages.logout')}}</p>
                      </a>
@@ -133,11 +133,11 @@
                            <div class="col-md-12">
                               <div class="row">
                                  <div class="col-md-6 col-12 pro-user">
-                                    <?php $external_link = asset('public/upload/profile'.'/'.Session::get('user_photo'));
+                                    <?php $external_link = asset('upload/profile'.'/'.Session::get('user_photo'));
                                        if (@GetImageSize($external_link)) {
                                        	$image = $external_link;
                                        } else {
-                                       	$image = asset('public/upload/profile'.'/'.'my-account-pro.png');
+                                       	$image = asset('upload/profile'.'/'.'my-account-pro.png');
                                        }?>
                                     <img src="{{$image}}">
                                     <input type="file" name="image" id="acco-tab-fo">

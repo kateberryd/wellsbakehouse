@@ -3,17 +3,17 @@
    <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
       
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <title>{{__('messages.site_name')}}</title>
+      <title>Wellsbakehouse</title>
        <meta property="og:url" content="{{__('messages.site_name')}}"/>
        <meta property="og:title" content="{{__('messages.site_name')}}"/>
-       <meta property="og:image" content="{{asset('public/favicon.png')}}"/>
+       <meta property="og:image" content="{{asset('favicon.png')}}"/>
        <meta property="og:image:width" content="250px"/>
        <meta property="og:image:height" content="250px"/>
        <meta property="og:site_name" content="{{__('messages.site_name')}}"/>
        <meta property="og:description" content="{{__('messages.metadescweb')}}"/>
        <meta property="og:keyword" content="{{__('messages.metakeyboard')}}"/>
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="shortcut icon" href="{{asset('public/favicon.png')}}">
+      <link rel="shortcut icon" href="{{asset('favicon.png')}}">
       <link rel="stylesheet" href="{{asset('admin_panel/vendors/bootstrap/dist/css/bootstrap.min.css')}}">
       <link rel="stylesheet" href="{{asset('admin_panel/vendors/font-awesome/css/font-awesome.min.css')}}">
       <link rel="stylesheet" href="{{asset('admin_panel/vendors/themify-icons/css/themify-icons.css')}}">
@@ -27,7 +27,7 @@
       <link rel="stylesheet" href="{{asset('admin_panel/vendors/datatables.net-bs4/css/dataTables.bootstrap4.min.css')}}">
       <link rel="stylesheet" href="{{asset('admin_panel/vendors/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css')}}">
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-      <link rel="stylesheet" type="text/css" href="{{asset('public/css/code.css')}}">
+      <link rel="stylesheet" type="text/css" href="{{asset('css/code.css')}}">
    </head>
    <body>
        <input type="hidden" id="path_delivery" value="{{url('/deliveryboy')}}">
@@ -37,7 +37,7 @@
                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
                <i class="fa fa-bars"></i>
                </button>
-               <a class="navbar-brand" href="./">{{__('messages.site_name')}}{{__('messages.delivery_boy')}}</a>
+               <a class="navbar-brand" href="./">Wellsbakehouse{{__('messages.delivery_boy')}}</a>
                <a class="navbar-brand hidden" href="./">{__('messages.sort_name')}}</a>
             </div>
             <div id="main-menu" class="main-menu collapse navbar-collapse">
@@ -76,7 +76,7 @@
                         if (@GetImageSize($external_link)) {
                                 $image = $external_link;
                         } else {
-                                $image = asset('burger/images/my-account-pro.png');
+                                $image = asset('images/my-account-pro.png');
                         }?>
                      <img class="user-avatar rounded-circle" src="{{$image}}" alt="{{__('messages.user_avtar')}}">
                      </a>
@@ -107,7 +107,7 @@
       <script src="{{asset('admin_panel/vendors/datatables.net-buttons/js/buttons.print.min.js')}}"></script>
       <script src="{{asset('admin_panel/vendors/datatables.net-buttons/js/buttons.colVis.min.js')}}"></script>
       <script src="{{asset('admin_panel/assets/js/init-scripts/data-table/datatables-init.js')}}"></script>
-       <script type="text/javascript" src="{{asset('public/js/admin.js').'?v=2'}}"></script>
+       <script type="text/javascript" src="{{asset('js/admin.js').'?v=2'}}"></script>
       @yield('footer')
    </body>
 </html>

@@ -410,27 +410,27 @@ class PaypalController extends Controller
                       $store->notify=1;
                       $store->save();
                       foreach ($cartCollection as $ke) {
-                            $getmenu=itemli::where("menu_name",$ke->name)->first();
+                            $getmenu=itemli::where("menu_name",$ke->prod_name)->first();
                            $result['ItemId']=(string)isset($getmenu->id)?$getmenu->id:0;
                            $result['ItemName']=(string)$ke->prod_name;
                            $result['ItemQty']=(string)$ke->prod_qty;
-                           $result['ItemAmt']=number_format($ke->price, 2, '.', '');
+                           $result['ItemAmt']=number_format($ke->prod_price, 2, '.', '');
                            $totalamount=(float)$ke->prod_qty*(float)$ke->prod_price;
                            $result['ItemTotalPrice']=number_format($totalamount, 2, '.', '');
                            $ingredient=array();
                            $inter_ids=array();
-                           foreach ($ke->attributes as $val) {
-                                     $ls=array();
-                                     $inter=Ingredient::find($val);
-                                     $ls['id']=(string)$inter->id;
-                                     $inter_ids[]=$inter->id;
-                                     $ls['category']=(string)$inter->category;
-                                     $ls['item_name']=(string)$inter->item_name;
-                                     $ls['type']=(string)$inter->type;
-                                     $ls['price']=(string)$inter->price;
-                                     $ls['menu_id']=(string)$inter->menu_id;
-                                     $ingredient[]=$ls;
-                             }
+                        //    foreach ($ke->attributes as $val) {
+                        //              $ls=array();
+                        //              $inter=Ingredient::find($val);
+                        //              $ls['id']=(string)$inter->id;
+                        //              $inter_ids[]=$inter->id;
+                        //              $ls['category']=(string)$inter->category;
+                        //              $ls['item_name']=(string)$inter->item_name;
+                        //              $ls['type']=(string)$inter->type;
+                        //              $ls['price']=(string)$inter->price;
+                        //              $ls['menu_id']=(string)$inter->menu_id;
+                        //              $ingredient[]=$ls;
+                        //      }
 
                         $result['Ingredients']=$ingredient;
                         $finalresult[]=$result;
@@ -470,47 +470,7 @@ class PaypalController extends Controller
     }
     
     
-    public function getPaymentStatusBasket(Request $request)
-    {
-
-
-    
-        $payment_id = Session::get('paypal_payment_id');
-    
-        if (empty($request->get('PayerID')) || empty($request->get('token'))) {
-            \Session::put('error','Payment failed');
-            $order=Order::where("pay_pal_paymentId",$payment_id)->first();
-            // if(count($order)!=0){
-            //     $order->delete();
-            // }
-            Session::flash('message',__('successerr.payment_fail')); 
-            Session::flash('alert-class', 'alert-danger');
-            return redirect('checkout');
-        }
-        $payment = Payment::get($payment_id, $this->_api_context);
-    
-        $execution = new PaymentExecution();
-        $execution->setPayerId($request->get('PayerID'));
-    
-        $result = $payment->execute($execution, $this->_api_context);
-        if ($result->getState() == 'approved') { 
-            $order=Order::where("pay_pal_paymentId",$payment_id)->first();
-            $order->pay_pal_token=$request->get('token');
-            $order->pay_pal_PayerID=$request->get('PayerID');
-            $order->save();
-            Session::flash('message', __('messages.order_success')); 
-            Session::flash('alert-class', 'alert-success');
-            return redirect("viewdetails/".$order->id);
-        }
-        $order=Order::where("pay_pal_paymentId",$payment_id)->first();
-        if(count($order)!=0){
-            $order->delete();
-        }
-        Session::flash('message',__('successerr.payment_fail')); 
-            Session::flash('alert-class', 'alert-danger');
-            return redirect('basket-checkout');
-    }
-
+  
   
 
 }

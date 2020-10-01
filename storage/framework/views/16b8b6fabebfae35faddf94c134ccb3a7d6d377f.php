@@ -140,19 +140,21 @@
                      </div>
                      <?php endif; ?>
                      <div class="collapse <?php echo e($showsec); ?> " id="collapseTH">
-                        <div class="cashswipe">
-                           <!-- <div class="radio check">
-                              <input type="checkbox" name="order_payment_type" id="order_payment_type_1" value="Cash" onchange="changebutton(this.value)">
-                              <img id="pay1" onclick="changebutton('Cash')" src="<?php echo e(asset('images/5.png')); ?>"/>
-                           </div> -->
+                     <div class="cashswipe">
                            <div class="radio check">
                               <input type="checkbox" name="order_payment_type" id="order_payment_type_1" value="Cash" onchange="changebutton(this.value)">
-                              <img id="pay2" onclick="changebutton('flutter_wave')" src="<?php echo e(asset('images/3.png')); ?>"/>
+                              <img id="pay1" onclick="changebutton('Cash')" src="<?php echo e(asset('images/5.png')); ?>"/>
                            </div>
                            <?php if($setting->paypal_active=='1'): ?>
                            <div class="check">
                               <input type="checkbox" name="order_payment_type" id="order_payment_type_3" value="Paypal" onchange="changebutton(this.value)">
                               <img id="pay2" onclick="changebutton('Paypal')" src="<?php echo e(asset('images/1.png')); ?>"/>
+                           </div>
+                           <?php endif; ?>
+                           <?php if($setting->stripe_active=='1'): ?>
+                           <div class="check">
+                              <input type="checkbox" name="order_payment_type" id="order_payment_type_5" value="Flutterwave" onchange="changebutton(this.value)">
+                              <img id="pay5" onclick="changebutton('Flutterwave')" src="<?php echo e(asset('images/3.png')); ?>"/>
                            </div>
                            <?php endif; ?>
                            <?php if($setting->stripe_active=='1'): ?>
@@ -243,7 +245,7 @@
                </div>
                <?php if(Session::get('login_user')): ?>
                <div id="orderplace1">
-                  <button type="button" onclick="orderplace()">
+                  <button type="button" onclick="orderplacebasket()">
                   <span style=""><?php echo e(__('messages.place_order')); ?></span>
                   </button>
                </div>
@@ -261,6 +263,7 @@
                      <input type="hidden" name="subtotal_or" id="subtotal_or" required="" />
                      <input type="hidden" name="lat_long_or" id="lat_long_or" required="">
                      <input type="hidden" name="charage_or" id="charage_or" required="" />
+                   
                      <script
                         src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                         data-key="<?php echo e(Session::get('stripe_key')); ?>"
@@ -287,6 +290,28 @@
                      <input type="hidden" name="total_price_pal" id="total_price_pal" required="" />
                      <input type="hidden" name="subtotal_pal" id="subtotal_pal" required="" />
                      <input type="hidden" name="charage_pal" id="charage_pal" required="" />
+                     <button type="submit">
+                     <span style=""><?php echo e(__('messages.place_order')); ?></span>
+                     </button>
+                  </form>
+               </div>
+               
+               <div id="orderplacefluttterwave" >
+                  <form action="<?php echo e(url('pay')); ?>" method="POST">
+                     <?php echo e(csrf_field()); ?>
+
+                     <input type="hidden" name="email" id="email" required="" /> 
+                     <input type="hidden" name="phone_number" id="phone_number" required="" />
+                     <input type="hidden" name="note" id="note"/>
+                     <input type="hidden" name="city" id="city" required="" />
+                     <input type="hidden" name="address" id="address" required="" />
+                     <input type="hidden" name="lat_long" id="lat_long" required="">
+                     <input type="hidden" name="payment_type" id="payment_type" required="" />
+                     <input type="hidden" name="shipping_type" id="shipping_type" required="" />
+                     <input type="hidden" name="amount" id="amount" required="" />
+                     <input type="hidden" name="subtotal" id="subtotal" required="" />
+                     <input type="hidden" name="charage" id="charage" required="" />
+                     <input type="hidden" name="page_type" id="page_type" value="basket" required="" />
                      <button type="submit">
                      <span style=""><?php echo e(__('messages.place_order')); ?></span>
                      </button>

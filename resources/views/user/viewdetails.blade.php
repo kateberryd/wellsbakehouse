@@ -10,7 +10,7 @@
             <li class="process-1">
                <div class="pro-rou">
                   <div class="round-d">
-                     <img src="{{asset('burger/images/ture.png')}}">
+                     <img src="{{asset('images/ture.png')}}">
                   </div>
                </div>
                <div class="order-d-text">
@@ -32,7 +32,7 @@
                <div class="pro-rou">
                   <div class="round-{{$divclass2}}">
                      <?php if($order->preparing_date_time!=""){?>
-                     <img src="{{asset('burger/images/ture.png')}}">
+                     <img src="{{asset('images/ture.png')}}">
                      <?php }else{?>
                      <span>{{__('messages.two')}}</span>
                      <?php }?>
@@ -62,7 +62,7 @@
                <div class="pro-rou">
                   <div class="round-{{$divclass3}}">
                      <?php if($order->dispatched_date_time!=""){?>
-                     <img src="{{asset('burger/images/ture.png')}}">
+                     <img src="{{asset('images/ture.png')}}">
                      <?php }else{?>
                      <span>{{__('messages.three')}}</span>
                      <?php }?>
@@ -95,7 +95,7 @@
                <div class="pro-rou">
                   <div class="round-{{$divclass4}}">
                      <?php if($order->delivered_date_time!=""){?>
-                     <img src="{{asset('burger/images/ture.png')}}">
+                     <img src="{{asset('images/ture.png')}}">
                      <?php }else{?>
                      <span> {{__('messages.four')}}</span>
                      <?php }?>
@@ -143,7 +143,7 @@
                         <div class="img">
                            @foreach($allmenu as $as)
                              @if($as->id==$item->item_id)
-                           <img src="{{asset('upload/images/menu_item_icon/'.$as->menu_image)}}">
+                              <img src="{{asset('upload/images/menu_item_icon/'.$as->menu_image)}}">
                              @endif
                            @endforeach
                         </div>
@@ -160,7 +160,7 @@
                            </div>
                            <span>
                               {{Session::get("usercurrency")}}{{$item->ItemTotalPrice}}
-                              <h1>{{Session::get("usercurrency")}}   	         		{{$item->item_amt}}<img src="{{asset('burger/images/cross-1.png')}}">{{$item->item_qty}}</h1>
+                              <h1>{{Session::get("usercurrency")}}{{$item->item_amt}}<img src="{{asset('images/cross-1.png')}}">{{$item->item_qty}}</h1>
                            </span>
                         </div>
                      </div>

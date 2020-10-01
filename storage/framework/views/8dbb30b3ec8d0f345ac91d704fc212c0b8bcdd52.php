@@ -91,6 +91,7 @@
                                     <div class="phone">
                                        <label><?php echo e(__('messages.phone_no')); ?></label><span>*</span>
                                        <input type="text" name="order_phone" id="order_phone" value="<?php echo e(Session::get('user_phone')); ?>" placeholder="<?php echo e(__('messages.phone_no')); ?>">
+                                       <input type="hidden" name="order_email" value="<?php echo e(Session::get('user_email')); ?>" id="order_email" />
                                     </div>
                                     <div class="city" id="cityorder" >
                                        <label><?php echo e(__('messages.city')); ?></label><span>*</span>
@@ -276,21 +277,22 @@
                   </form>
                </div>
                <div id="orderplacepaypal">
-                  <?php
-                    $array = array(array('metaname' => 'color', 'metavalue' => 'blue'),
-                                 array('metaname' => 'size', 'metavalue' => 'big'));
-                  ?>
+                 
                   <form action="<?php echo e(url('paypal')); ?>" method="POST">
                   <?php echo e(csrf_field()); ?>
 
-                  <input type="hidden" name="amount" value="500" /> 
-                  <input type="hidden" name="payment_method" value="both" /> 
-                  <input type="hidden" name="description" value="Beats by Dre. 2017" />
-                   <input type="hidden" name="country" value="NG" /> <input type="hidden" name="currency" value="NGN" /> <input type="hidden" name="email" value="test@test.com" /> <input type="hidden" name="firstname" value="Oluwole" /> <input type="hidden" name="lastname" value="Adebiyi" /> <input type="hidden" name="metadata" value="<?php echo e(json_encode($array)); ?>" > <input type="hidden" name="phonenumber" value="090929992892" /> 
-                   <input type="hidden" name="paymentplan" value="362" /> 
-                   <input type="hidden" name="ref" value="MY_NAME_5uwh2a2a7f270ac98" /> 
-                   <input type="hidden" name="logo" value="https://pbs.twimg.com/profile_images/915859962554929153/jnVxGxVj.jpg" />  --}}
-                   <input type="hidden" name="title" value="Flamez Co" />  
+                     <input type="hidden" name="amount" value="500" /> 
+                     <input type="hidden" name="phone_pal" id="phone_pal" required="" />
+                     <input type="hidden" name="note_pal" id="note_pal"/>
+                     <input type="hidden" name="city_pal" id="city_pal" required="" />
+                     <input type="hidden" name="address_pal" id="address_pal" required="" />
+                     <input type="hidden" name="lat_long_pal" id="lat_long_pal" required="">
+                     <input type="hidden" name="payment_type_pal" id="payment_type_pal" required="" />
+                     <input type="hidden" name="shipping_type_pal" id="shipping_type_pal" required="" />
+                     <input type="hidden" name="total_price_pal" id="total_price_pal" required="" />
+                     <input type="hidden" name="subtotal_pal" id="subtotal_pal" required="" />
+                     <input type="hidden" name="charage_pal" id="charage_pal" required="" />
+           
                   <button type="submit">
                   <span style=""><?php echo e(__('messages.place_order')); ?></span>
                   </button>
@@ -302,21 +304,18 @@
                   <form action="<?php echo e(url('pay')); ?>" method="POST">
                      <?php echo e(csrf_field()); ?>
 
-                     <input type="hidden" name="amount" value="500" />
-                     <input type="hidden" name="payment_method" value="both" /> 
-                     <input type="hidden" name="description" value="Beats by Dre. 2017" /> 
-                     <input type="hidden" name="country" value="NG" /> 
-                     <input type="hidden" name="currency" value="NGN" />
-                     <input type="hidden" name="phone_pal" id="phone_pal" required="" />
-                     <input type="hidden" name="note_pal" id="note_pal"/>
-                     <input type="hidden" name="city_pal" id="city_pal" required="" />
-                     <input type="hidden" name="address_pal" id="address_pal" required="" />
-                     <input type="hidden" name="lat_long_pal" id="lat_long_pal" required="">
-                     <input type="hidden" name="payment_type_pal" id="payment_type_pal" required="" />
-                     <input type="hidden" name="shipping_type_pal" id="shipping_type_pal" required="" />
-                     <input type="hidden" name="total_price_pal" id="total_price_pal" required="" />
-                     <input type="hidden" name="subtotal_pal" id="subtotal_pal" required="" />
-                     <input type="hidden" name="charage_pal" id="charage_pal" required="" />
+                     <input type="hidden" name="email" id="email" required="" /> 
+                     <input type="hidden" name="phone_number" id="phone_number" required="" />
+                     <input type="hidden" name="note" id="note"/>
+                     <input type="hidden" name="city" id="city" required="" />
+                     <input type="hidden" name="address" id="address" required="" />
+                     <input type="hidden" name="lat_long" id="lat_long" required="">
+                     <input type="hidden" name="payment_type" id="payment_type"  required="" />
+                     <input type="hidden" name="shipping_type" id="shipping_type" required="" />
+                     <input type="hidden" name="amount" id="amount" required="" />
+                     <input type="hidden" name="subtotal" id="subtotal" required="" />
+                     <input type="hidden" name="charage" id="charage" required="" />
+                    
                      <button type="submit">
                      <span style=""><?php echo e(__('messages.place_order')); ?></span>
                      </button>

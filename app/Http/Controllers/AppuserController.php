@@ -18,11 +18,13 @@ use Cookie;
 use App\FoodOrder;
 use App\OrderResponse;
 use App\Ingredient;
+use App\BuyerBasket;
 use Hash;
 use Mail;
 use DateTimeZone;
 use DateTime;
 use Cart;
+
 class AppuserController extends Controller {
   
    private $_api_context;
@@ -304,6 +306,8 @@ class AppuserController extends Controller {
       Session::flash('alert-class', 'alert-success');
       return $store->id;
    }
+   
+   
    public function checkuserpassword($cpwd){
       $user=AppUser::find(Session::get("login_user"));
       if($user->password==md5($cpwd)){
@@ -314,6 +318,82 @@ class AppuserController extends Controller {
           return 0;
       }
    }
+   
+   
+   
+   
+   public function placeorderbasket(Request $request){
+    $data=array();
+    $finalresult=array();
+    $result=array();
+    $getuser=AppUser::find(Session::get('login_user'));
+    $cartCollection = BuyerBasket::where('user_id', $getuser->id)->get();
+    $setting=Setting::find(1);
+    $gettimezone=$this->gettimezonename($setting->timezone);
+    date_default_timezone_set($gettimezone);
+    $date = date('d-m-Y H:i');
+    $store=new Order();
+    $store->user_id=$getuser->id;
+    $store->total_price=number_format($request->get("totalprice"), 2, '.', '');
+    $store->order_placed_date=$date;
+    $store->order_status=0;
+    $store->latlong= strip_tags(preg_replace('#<script(.*?)>(.*?)</script>#is', '',$request->get("latlong")));
+    $store->name=$getuser->name;
+    $store->address=strip_tags(preg_replace('#<script(.*?)>(.*?)</script>#is', '',$request->get("address")));
+    $store->email=$getuser->email;
+    $store->payment_type= strip_tags(preg_replace('#<script(.*?)>(.*?)</script>#is', '',$request->get("payment_type")));
+    $store->notes= strip_tags(preg_replace('#<script(.*?)>(.*?)</script>#is', '',$request->get("note")));
+    $store->city= strip_tags(preg_replace('#<script(.*?)>(.*?)</script>#is', '',$request->get("city")));
+    $store->shipping_type= strip_tags(preg_replace('#<script(.*?)>(.*?)</script>#is', '',$request->get("shipping_type")));
+    $store->subtotal=number_format($request->get("subtotal"), 2, '.', '');
+    $store->delivery_charges=number_format($request->get("charge"), 2, '.', '');
+    $store->phone_no=strip_tags(preg_replace('#<script(.*?)>(.*?)</script>#is', '',$request->get("phone")));
+    $store->delivery_mode=strip_tags(preg_replace('#<script(.*?)>(.*?)</script>#is', '',$request->get("shipping_type")));
+    $store->notify=1;
+    $store->save();
+    foreach ($cartCollection as $ke) {
+         $getmenu=Item::where("menu_name",$ke->prod_name)->first();
+         $result['ItemId']=(string)isset($getmenu->id)?$getmenu->id:0;
+         $result['ItemName']=(string)$ke->prod_name;
+         $result['ItemQty']=(string)$ke->prod_qty;
+         $result['ItemAmt']=(string)$ke->prod_price;
+         $totalamount=(float)$ke->prod_qty*(float)$ke->prod_price;
+         $result['ItemTotalPrice']=number_format($totalamount, 2, '.', '');
+         $ingredient=array();
+         $inter_ids=array();
+        //  foreach ($ke as $val) {
+        //            $ls=array();
+        //            $inter=Ingredient::find($val);
+        //            $ls['id']=(string)$inter->id;
+        //            $inter_ids[]=$inter->id;
+        //            $ls['category']=(string)$inter->category;
+        //            $ls['item_name']=(string)$inter->item_name;
+        //            $ls['type']=(string)$inter->type;
+        //            $ls['price']=(string)$inter->price;
+        //            $ls['menu_id']=(string)$inter->menu_id;
+        //            $ingredient[]=$ls;
+        //    }
+
+      $result['Ingredients']=$ingredient;
+      $finalresult[]=$result;
+      $adddesc=new OrderResponse();
+      $adddesc->set_order_id=$store->id;
+      $adddesc->item_id=$result["ItemId"];
+      $adddesc->item_qty=$result["ItemQty"];
+      $adddesc->ItemTotalPrice=number_format($result["ItemTotalPrice"], 2, '.', '');
+      $adddesc->item_amt=$result["ItemAmt"];
+      $adddesc->ingredients_id=implode(",",$inter_ids);
+      $adddesc->save();
+    }
+    $data=array("Order"=>$finalresult);
+    $addresponse=new FoodOrder();
+    $addresponse->order_id=$store->id;
+    $addresponse->desc=json_encode($data);
+    $addresponse->save();
+    Session::flash('message', __('messages.order_success')); 
+    Session::flash('alert-class', 'alert-success');
+    return $store->id;
+ }
 
    public function changeuserpwd(Request $request){
        if(!Session::get("login_user")){

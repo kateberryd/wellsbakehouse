@@ -10,7 +10,7 @@
             <li class="process-1">
                <div class="pro-rou">
                   <div class="round-d">
-                     <img src="<?php echo e(asset('burger/images/ture.png')); ?>">
+                     <img src="<?php echo e(asset('images/ture.png')); ?>">
                   </div>
                </div>
                <div class="order-d-text">
@@ -32,7 +32,7 @@
                <div class="pro-rou">
                   <div class="round-<?php echo e($divclass2); ?>">
                      <?php if($order->preparing_date_time!=""){?>
-                     <img src="<?php echo e(asset('burger/images/ture.png')); ?>">
+                     <img src="<?php echo e(asset('images/ture.png')); ?>">
                      <?php }else{?>
                      <span><?php echo e(__('messages.two')); ?></span>
                      <?php }?>
@@ -63,7 +63,7 @@
                <div class="pro-rou">
                   <div class="round-<?php echo e($divclass3); ?>">
                      <?php if($order->dispatched_date_time!=""){?>
-                     <img src="<?php echo e(asset('burger/images/ture.png')); ?>">
+                     <img src="<?php echo e(asset('images/ture.png')); ?>">
                      <?php }else{?>
                      <span><?php echo e(__('messages.three')); ?></span>
                      <?php }?>
@@ -97,7 +97,7 @@
                <div class="pro-rou">
                   <div class="round-<?php echo e($divclass4); ?>">
                      <?php if($order->delivered_date_time!=""){?>
-                     <img src="<?php echo e(asset('burger/images/ture.png')); ?>">
+                     <img src="<?php echo e(asset('images/ture.png')); ?>">
                      <?php }else{?>
                      <span> <?php echo e(__('messages.four')); ?></span>
                      <?php }?>
@@ -147,7 +147,7 @@
                         <div class="img">
                            <?php $__currentLoopData = $allmenu; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $as): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                              <?php if($as->id==$item->item_id): ?>
-                           <img src="<?php echo e(asset('upload/images/menu_item_icon/'.$as->menu_image)); ?>">
+                              <img src="<?php echo e(asset('upload/images/menu_item_icon/'.$as->menu_image)); ?>">
                              <?php endif; ?>
                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </div>
@@ -165,7 +165,7 @@
                            <span>
                               <?php echo e(Session::get("usercurrency")); ?><?php echo e($item->ItemTotalPrice); ?>
 
-                              <h1><?php echo e(Session::get("usercurrency")); ?>   	         		<?php echo e($item->item_amt); ?><img src="<?php echo e(asset('burger/images/cross-1.png')); ?>"><?php echo e($item->item_qty); ?></h1>
+                              <h1><?php echo e(Session::get("usercurrency")); ?><?php echo e($item->item_amt); ?><img src="<?php echo e(asset('images/cross-1.png')); ?>"><?php echo e($item->item_qty); ?></h1>
                            </span>
                         </div>
                      </div>

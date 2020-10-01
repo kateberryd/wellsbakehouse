@@ -212,7 +212,7 @@ function changecategory(val,id) {
             txt=txt+'<div class="row">';
             var path = $("#path_site").val();
               for (var i = 0; i < data.length; i++) {
-                 txt=txt+'<div class="portfolio 1 col-md-6 burger w3-container  w3-animate-zoom portfoliocat" data-cat="'+data[i]['id']+'" data-bound><div class="items"><div class="b-img"><a href="' + path + '/detailitem' + "/" + data[i]['id'] + '"><img src="' + path + '/public/upload/images/menu_item_icon' + "/" + data[i]['menu_image'] + '"></a></div><div class="bor"><div class="b-text"><h1><a href="' + path + '/detailitem' + "/" + data[i]['id'] + '">' + data[i]['menu_name'] + '</a></h1><p>' + data[i]['description'] + '</p></div><div class="price"><h1>' + $("#currency").val() + data[i]['price'] + '</h1><div class="cart"><a href="' + path + '/detailitem' + "/" + data[i]['id'] + '">' + $("#addcart").val() + '</a></div></div></div></div></div>';
+                 txt=txt+'<div class="portfolio 1 col-md-6 burger w3-container  w3-animate-zoom portfoliocat" data-cat="'+data[i]['id']+'" data-bound><div class="items"><div class="b-img"><a href="' + path + '/detailitem' + "/" + data[i]['id'] + '"><img src="' + path + '/upload/images/menu_item_icon' + "/" + data[i]['menu_image'] + '"></a></div><div class="bor"><div class="b-text"><h1><a href="' + path + '/detailitem' + "/" + data[i]['id'] + '">' + data[i]['menu_name'] + '</a></h1><p>' + data[i]['description'] + '</p></div><div class="price"><h1>' + $("#currency").val() + data[i]['price'] + '</h1><div class="cart"><a href="' + path + '/detailitem' + "/" + data[i]['id'] + '">' + $("#addcart").val() + '</a></div></div></div></div></div>';
               }
             txt=txt+'</div>';
             var cat = res.category;
@@ -714,13 +714,15 @@ function changebutton(val) {
         
     if (val == "Flutterwave") {
         var totalprice = document.getElementById("finaltotal_order").innerHTML;
-        $("#phone_pal").val($("#order_phone").val());
-        $("#note_pal").val($("#order_notes").val());
-        $("#city_pal").val($("#order_city").val());
-        $("#payment_type_pal").val("Paypal");
-        $('#total_price_pal').val(totalprice);
-        $('#subtotal_pal').val(document.getElementById("subtotal_order").innerHTML);
-        if ($("#phone_pal").val() != "" && $("#city_pal").val() != "") {
+        $("#phone_number").val($("#order_phone").val());
+        $("#note").val($("#order_notes").val());
+        $("#city").val($("#order_city").val());
+        $("#payment_type").val("Flutterwave");
+        $("#email").val($("#order_email").val());
+        $("#page_type").val();
+        $('#amount').val(totalprice);
+        $('#subtotal').val(document.getElementById("subtotal_order").innerHTML);
+        if ($("#phone").val() != "" && $("#city").val() != "") {
             document.getElementById("orderplace1").style.display = "none";
             document.getElementById("orderplacestrip").style.display = "none";
             document.getElementById("orderplacepaypal").style.display = "none";
@@ -735,13 +737,13 @@ function changebutton(val) {
             $("#order_payment_type_5").prop("checked", true);
             if ($("#home1").prop("checked") == true) {
                 var shipping_type = 0;
-                $("#shipping_type_pal").val(0);
-                $("#address_pal").val($("#us2-address").val());
-                $("#lat_long_pal").val($("#us2-lat").val() + "," + $("#us2-lon").val());
-                $('#charage_pal').val(document.getElementById("delivery_charges_order").innerHTML);
+                $("#shipping_type").val(0);
+                $("#address").val($("#us2-address").val());
+                $("#lat_long").val($("#us2-lat").val() + "," + $("#us2-lon").val());
+                $('#charage').val(document.getElementById("delivery_charges_order").innerHTML);
             } else if ($("#home2").prop("checked") == true) {
                 var shipping_type = 1;
-                $("#shipping_type_pal").val(1);
+                $("#shipping_type").val(1);
             }
 
         } else {
@@ -841,6 +843,66 @@ function orderplace() {
     }
 }
 
+
+function orderplacebasket() {
+    var phone = $("#order_phone").val();
+    var note = $("#order_notes").val();
+    var city = $("#order_city").val();
+    var payment_type = 'Cash';
+    var totalprice = document.getElementById("finaltotal_order").innerHTML;
+    var subtotal = document.getElementById("subtotal_order").innerHTML;
+    var charge = document.getElementById("delivery_charges_order").innerHTML;
+    var typedata = "";
+ //   console.log($("#us2-address").val());
+
+    if ($("#home1").prop("checked") == true) {
+        var shipping_type = 0;
+        var address = $("#us2-address").val();
+        var latlong = $("#us2-lat").val() + "," + $("#us2-lon").val();
+    }
+    if ($("#home2").prop("checked") == true) {
+        var shipping_type = 1;
+        var address ="";
+        var latlong ="";
+    } 
+
+    if (phone != "" && city != "" && payment_type != "") {
+        $.ajax({
+            url: $("#path_site").val() + "/basketplaceorder",
+            method: "GET",
+            data: {
+                phone: phone,
+                note: note,
+                city: city,
+                address:address,
+                payment_type: payment_type,
+                shipping_type: shipping_type,
+                totalprice: totalprice,
+                subtotal: subtotal,
+                charge: charge,
+                latlong:latlong
+            },
+            success: function (data1) {
+                console.log(data1);
+                if (data1 != 0) {
+                    window.location.href = $("#path_site").val() + "/viewdetails" + "/" + data1;
+                }
+            }
+        });
+    } else {
+        document.getElementById("orderplace1").style.display = "none";
+        document.getElementById("orderplacestrip").style.display = "none";
+        document.getElementById("orderplacepaypal").style.display = "none";
+        document.getElementById("orderplacepaypal").style.display = "none";
+        $("#pay1").removeClass('activepayment');
+        $("#pay2").removeClass('activepayment');
+        $("#pay3").removeClass('activepayment');
+        $("#order_payment_type_1").prop("checked", false);
+        $("#order_payment_type_3").prop("checked", false);
+        $("#order_payment_type_4").prop("checked", false);
+        alert($("#required_field").val());
+    }
+}
 
 function addprice(price, iqty) {
     if ($("#checkbox-" + iqty).prop("checked") == true) {
